@@ -25,14 +25,14 @@ def get_naimark_unitary_from_vectors(vecs, assert_unitarty=True, atol=1e-05):
     Construct a Naimark unitary matrix from a set of vectors.
 
     Parameters:
-    vecs (list of np.array): A list of vectors for which the Naimark unitary is to be constructed.
+    vecs (list of np.array): A list of (bra) vectors <psi| for which the Naimark unitary is to be constructed.
     assert_unitarty (bool): If True, asserts that the constructed matrix is unitary.
     atol (float): Absolute tolerance for the unitarity assertion.
 
     Returns:
     np.matrix: The constructed Naimark unitary matrix.
     '''
-    A = np.concatenate(([psi.conj() for psi in vecs]), axis=0)
+    A = np.concatenate(([psi for psi in vecs]), axis=0)
     y = scipy.linalg.null_space(A.T.conj())
     U = np.concatenate((A,y),axis=1)
     if assert_unitarty:
