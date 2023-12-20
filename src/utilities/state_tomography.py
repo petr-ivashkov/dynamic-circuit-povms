@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 
 from src.utilities.path import *
-from src.utilities.helpers import theoretical_probs, fidelity
+from src.utilities.helpers import theoretical_probs
 
 # Loading POVM and vector data for SIC-POVMs in 2D and 4D spaces.
 sic_4d_povm = pickle.load(open(path + "data/povms/sic_4d_povm.p", "rb"))

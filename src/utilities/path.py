@@ -1,1 +1,1 @@
-path = 'your path' # path to your local repository
+path = 'C:/Users/ivash/projects/qamp/qamp-generalized-measurements/' # path to your local repository

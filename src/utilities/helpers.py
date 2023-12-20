@@ -321,7 +321,7 @@ def get_povm_fidelity_from_binary_aqc_circuits(aqc_circuits):
     aqc_circuits (dict): A dictionary of quantum circuits keyed by binary strings.
 
     Returns:
-    float: Fidelity of the reconstructed POVM.
+    float: Fidelity of the reconstructed POVM with respect to a 4D SIC-POVM.
     '''
     choi = get_normalized_choi_matrix_from_povm(sic_4d_povm)
     povm = get_povm_from_binary_aqc_circuits(aqc_circuits)
@@ -357,7 +357,7 @@ def get_povm_fidelity_from_naimark_aqc_circuits(aqc_circuits):
     aqc_circuits (dict): A dictionary of quantum circuits (only one expected).
 
     Returns:
-    float: Fidelity of the reconstructed POVM.
+    float: Fidelity of the reconstructed POVM with respect to a 4D SIC-POVM.
     '''
     choi = get_normalized_choi_matrix_from_povm(sic_4d_povm)
     povm = get_povm_from_naimark_aqc_circuits(aqc_circuits)
@@ -402,7 +402,7 @@ def get_povm_fidelity_from_hybrid_aqc_circuits(aqc_circuits):
     aqc_circuits (dict): A dictionary of quantum circuits.
 
     Returns:
-    float: Fidelity of the reconstructed POVM.
+    float: Fidelity of the reconstructed POVM with respect to a 4D SIC-POVM.
     '''
     choi = get_normalized_choi_matrix_from_povm(sic_4d_povm)
     povm = get_povm_from_hybrid_aqc_circuits(aqc_circuits)
