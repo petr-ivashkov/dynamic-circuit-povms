@@ -1,5 +1,7 @@
 ## Overview
-This repository contains code for performing generalized quantum measurements (POVMs) on multi-qubit systems. The implementations include Naimark's dilation, binary search, and a new hybrid approach which combines both.
+This repository contains code for performing generalized quantum measurements (POVMs) on multi-qubit systems. The implementations include Naimark's dilation, binary search, and a new hybrid approach which combines both. 
+
+The paper is available on arxiv: [High-fidelity, multi-qubit generalized measurements with dynamic circuits](https://arxiv.org/abs/2312.14087)
 
 ## Key Features
 - **Naimark's Dilation**: Implements POVMs by coupling the measured system to an ancillary system and performing a single projective measurement in the extended Hilbert space.
