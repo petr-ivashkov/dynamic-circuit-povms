@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
-from qiskit.extensions import UnitaryGate
+# from qiskit.extensions import UnitaryGate
 
 # Helper functions section:
 def get_measurement_op(povm, start, end):
@@ -113,7 +113,7 @@ class POVM:
         return True
 
 class BinaryTreePOVM(POVM):
-    """Class which implements the binary tree approach as described in https://arxiv.org/abs/0712.2665 
+    """Class which implements the binary tree approach as described in https://journals.aps.org/pra/abstract/10.1103/PhysRevA.77.052104 
     to contruct a POVM measurement tree. 
     """
     def __init__(self, povm, conditional_calibration=False):
@@ -180,10 +180,14 @@ class BinaryTreePOVM(POVM):
             qc.append(QuantumCircuit(qr, cr, name="measurement-circuit"))
 
         root = self.nodes["0"]
-        U_gate = UnitaryGate(root.U, label=root.key)
+
+        # U_gate = UnitaryGate(root.U, label=root.key)
 
         for cc in range(len(qc)):
-            qc[cc].append(U_gate, qr)
+
+            # qc[cc].append(U_gate, qr)
+            qc[cc].unitary(root.U, qr, label=root.key)
+
             qc[cc].measure(qr[-1], cr[0])
             # invert post-measurement state for conditional calibration
             if cc&1:
@@ -199,12 +203,14 @@ class BinaryTreePOVM(POVM):
         for i in range(1,self.depth):
             next_level = []
             for node in current_level:
-                U_gate = UnitaryGate(node.U, label=node.key)
+                # U_gate = UnitaryGate(node.U, label=node.key)
+
                 #XOR node key with conditional calibration to invert required bits (conditions)
                 for cc in range(len(qc)):
                     cr_state = int(node.key[:-1],2)^(cc%(2**i))
                     with qc[cc].if_test((cr, cr_state)):
-                        qc[cc].append(U_gate, qr)
+                        # qc[cc].append(U_gate, qr)
+                        qc[cc].unitary(node.U, qr, label=node.key)
                 if node.left in self.nodes: next_level.append(self.nodes[node.left])
                 if node.right in self.nodes: next_level.append(self.nodes[node.right])
             current_level = next_level

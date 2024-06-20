@@ -1,7 +1,7 @@
 import numpy as np
 import scipy
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
-from qiskit.extensions import UnitaryGate
+# from qiskit.extensions import UnitaryGate
 from scipy.linalg import sqrtm, svd
 
 ### NOTE: Please be aware that certain functions within this module were specifically designed for targeted tasks over the course of the project. As a result, there may be instances of redundancy or repetition in their functionality.
@@ -59,8 +59,11 @@ def get_naimark_circuit_from_vectors(vecs):
     qc = QuantumCircuit(system, anc, name="measurement-circuit")
 
     U = get_naimark_unitary_from_vectors(vecs)
-    U_gate = UnitaryGate(U, label='U')
-    qc.append(U_gate, system[:] + anc[:])
+    # U_gate = UnitaryGate(U, label='U')
+    # qc.append(U_gate, system[:] + anc[:])
+
+    qc.unitary(U, system[:] + anc[:], label='U')
+
     qc.measure_all()
     return qc
 
@@ -216,7 +219,7 @@ def rank_one_circuit(povm, state, U):
 
     ancilla_reg = QuantumRegister(num_ancilla_qubit, name='ancilla') # ancilla register
 
-    U_gate = UnitaryGate(U, label='U') # unitary gate to be applied between system and ancilla
+    # U_gate = UnitaryGate(U, label='U') # unitary gate to be applied between system and ancilla
     
     
     # create the quantum circuit for the system and ancilla
@@ -227,7 +230,8 @@ def rank_one_circuit(povm, state, U):
     qc.reset(ancilla_reg)
 
     # append the unitary gate
-    qc.append(U_gate, range(system_reg.size + ancilla_reg.size))
+    # qc.append(U_gate, range(system_reg.size + ancilla_reg.size))
+    qc.unitary(U, system_reg[:] + ancilla_reg[:], label='U')
 
     # measure only the ancilliary qubits
     qc.measure_all()
@@ -260,7 +264,7 @@ def full_rank_circuit(povm, state, U):
 
     classical_reg = ClassicalRegister(num_ancilla_qubit, name='measure') # classical register
 
-    U_gate = UnitaryGate(U, label='U') # unitary gate to be applied between system and ancilla
+    # U_gate = UnitaryGate(U, label='U') # unitary gate to be applied between system and ancilla
     
     
     # create the quantum circuit for the system and ancilla
@@ -271,7 +275,8 @@ def full_rank_circuit(povm, state, U):
     qc.reset(ancilla_reg)
 
     # append the unitary gate
-    qc.append(U_gate, range(system_reg.size + ancilla_reg.size))
+    # qc.append(U_gate, range(system_reg.size + ancilla_reg.size))
+    qc.unitary(U, system_reg[:] + ancilla_reg[:], label='U')
 
     # measure only the ancilliary qubits
     qc.measure(ancilla_reg, classical_reg)
